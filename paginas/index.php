@@ -1,5 +1,6 @@
 <?php
 include 'conexion.php';
+
 var_dump($_POST);
 if ($_POST['rol']=='Admin') {
     session_start();
@@ -10,8 +11,9 @@ if ($_SESSION['rol']=='Admin') {
     if(!empty($_REQUEST['correo']) && !empty($_REQUEST['contrasena'])){
         
         //Recojo las variables
-        $user = $_REQUEST['correo'];
-        $pass = $_REQUEST['contrasena'];
+        $user = $connection->real_escape_string($_REQUEST['correo']);
+       
+        $pass =  $connection->real_escape_string($_REQUEST['contrasena']);
         //Miro con la sentencia sql si esta el usuario insertado, si lo esta creo una sesion con su nombre y lo llevo a nosotros y sino lo llevo al login 
         $sql = "SELECT email_admin  FROM tbl_admin WHERE (email_admin = '$user') and contra_admin = '{$pass}'";
       

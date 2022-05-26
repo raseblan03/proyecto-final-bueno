@@ -131,3 +131,66 @@ h1 {
     border: 2px solid red;
     border-radius: 25px;
 } */
+
+@media only screen and (max-width: 768px) {
+    .no-table {
+        max-width: 500px;
+    }
+    /* Force table to not be like tables anymore */
+    table.no-table,
+    table.no-table thead,
+    table.no-table tbody,
+    table.no-table th,
+    table.no-table td,
+    table.no-table tr {
+        display: block;
+    }
+    .no-table thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+    table.no-table td {
+        /* Behave  like a "row" */
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        white-space: normal;
+        text-align: center;
+    }
+    table.no-table td:before {
+        /* Now like a table header */
+        position: absolute;
+        /* Top/left values mimic padding */
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+    }
+    table.no-table td:before {
+        content: attr(data-title);
+    }
+    table.no-table tfoot tr td {
+        display: inline-block;
+        width: 30%;
+    }
+    table.no-table tfoot {
+        position: fixed;
+        top: 34rem;
+        font-weight: bold;
+        float: left;
+        width: 75%;
+    }
+}
+
+table.no-table tbody tr {
+    margin-bottom: 1rem;
+    border: 1px solid grey;
+}
+
+table.no-table tfoot tr td:last-child {
+    display: none;
+}

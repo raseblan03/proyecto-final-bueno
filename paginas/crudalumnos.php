@@ -65,6 +65,7 @@
     include 'conexion.php';
     session_start();
     if ($_SESSION['rol']==true) {
+       
     $sql = "SELECT * FROM tbl_alumne;";
     $listadodept = mysqli_query($connection, $sql);
     
@@ -86,10 +87,20 @@ if (isset($_GET['nombre1'])) {
     $listadodept = mysqli_query($connection, $sql);
       $sql20 = "SELECT  id_alumne, nom_alu,email_alu,dni_alu,telf_alu,curso_alu
       FROM tbl_alumne
-      WHERE  nom_alu  Like "."'".$search. "'" ;
-     
-      
-  $listadodept1 = mysqli_query($connection, $sql20);
+      WHERE  nom_alu  Like "."'".'%'.$search.'%'. "'" ;
+   $listadodept1 = mysqli_query($connection, $sql20);
+    
+    if (mysqli_num_rows( $listadodept1)==0) {
+      ?>
+<script>
+alert ("No hay registros que coincidan con tus filtros")
+                aviso('crudalumnos.php');
+                </script>
+   
+  
+  <?php
+   }
+ 
   }
 
   
@@ -181,7 +192,7 @@ if (isset($_GET['nombre1'])) {
         ?>
          <td class="boton"><button class="btn btn-danger" onClick="aviso('borraralumnos.php?id=<?php echo $profes['id_alumne']; ?>');">Borrar</button></td>
          <td class="boton"><button class="btn btn-primary" onClick="aviso('modificaralumnos.php?id=<?php echo $profes['id_alumne']; ?>');">Modificar</button></td>
-         <td class="boton"><button class="btn btn-primary" onClick="aviso('emailalumnos.php?id=<?php echo $profes['id_alumne']; ?>');">Email</button></td>
+         <td class="boton"><button class="btn btn-primary" onClick="aviso('enviaremail.php');">Email</button></td>
         </tr>
      <?php
     }
@@ -215,7 +226,7 @@ if (isset($_GET['nombre1'])) {
         ?>
          <td class="boton"><button class="btn btn-danger" onClick="aviso('borraralumnos.php?id=<?php echo $alumno['id_alumne']; ?>');">Borrar</button></td>
          <td class="boton"><button class="btn btn-primary" onClick="aviso('modificaralumnos.php?id=<?php echo $alumno['id_alumne']; ?>');">Modificar</button></td>
-         <td class="boton"><button class="btn btn-primary" onClick="aviso('emailalumnos.php?id=<?php echo $alumno['id_alumne']; ?>');">Email</button></td>
+         <td class="boton"><button class="btn btn-primary" onClick="aviso('enviaremail.php');">Email</button></td>
         </tr>
      <?php
     }
@@ -273,9 +284,19 @@ if (isset($_GET['nombre1'])) {
                
     $sql20 = "SELECT  id_alumne, nom_alu,email_alu,dni_alu,telf_alu,curso_alu
     FROM tbl_alumne
-    WHERE  nom_alu  Like "."'".$search. "'" ;
+    WHERE  nom_alu  Like "."'".'%'.$search.'%'. "'" ;
 $listadodept1 = mysqli_query($connection, $sql20);
+if (mysqli_num_rows( $listadodept1)==0) {
+    ?>
+<script>
+alert ("No hay registros que coincidan con tus filtros")
+              aviso('crudalumnos.php');
+              </script>
+ 
+
+<?php
   }
+}
               
      
 if (isset($_GET['nombre2'])) {
@@ -338,6 +359,7 @@ if (isset($_GET['nombre2'])) {
     }
     echo '</table>';
 }
+  }
       ?>
    
    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -361,7 +383,7 @@ if (isset($_GET['nombre2'])) {
   
   </script>
   <?php
-    }
+    
     ?>
 
 

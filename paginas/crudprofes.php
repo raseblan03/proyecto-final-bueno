@@ -68,6 +68,7 @@
     $sql = "SELECT * FROM tbl_professor;";
     $listadodept = mysqli_query($connection, $sql);
     
+    
 ?>
     <form action="crudprofes.php" method="GET">
     <div class="filtro" >
@@ -86,8 +87,20 @@ if (isset($_GET['nombre1'])) {
     $listadodept = mysqli_query($connection, $sql);
       $sql20 = "SELECT  id_professor, nom_prof,email_prof,dni_prof,telf,curso_prof
       FROM tbl_professor
-      WHERE  nom_prof  Like "."'".$search. "'" ;
-  $listadodept1 = mysqli_query($connection, $sql20);
+      WHERE  nom_prof  Like "."'".'%'.$search.'%'. "'" ;
+      $listadodept1 = mysqli_query($connection, $sql20);
+          if (mysqli_num_rows( $listadodept1)==0) {
+            ?>
+      <script>
+          
+      alert ("No hay registros que coincidan con tus filtros")
+                      aviso('crudprofes.php');
+                      </script>
+         
+        
+        <?php
+          }
+  
 }
   
     
@@ -178,7 +191,7 @@ if (isset($_GET['nombre1'])) {
         ?>
          <td class="boton"><button class="btn btn-danger" onClick="aviso('borrarprofes.php?id=<?php echo $profes['id_professor']; ?>');">Borrar</button></td>
          <td class="boton"><button class="btn btn-primary" onClick="aviso('modificarprofes.php?id=<?php echo $profes['id_professor']; ?>');">Modificar</button></td>
-         <td class="boton"><button class="btn btn-primary" onClick="aviso('emailalumnos.php?id=<?php echo $profes['id_professor']; ?>');">Email</button></td>
+         <td class="boton"><button class="btn btn-primary" onClick="aviso('enviaremail.php?id=<?php echo $profes['id_professor']; ?>');">Email</button></td>
         </tr>
      <?php
     }
@@ -212,7 +225,7 @@ if (isset($_GET['nombre1'])) {
         ?>
          <td class="boton"><button class="btn btn-danger" onClick="aviso('borrarprofes.php?id=<?php echo $alumno['id_professor']; ?>');">Borrar</button></td>
          <td class="boton"><button class="btn btn-primary" onClick="aviso('modificarprofes.php?id=<?php echo $alumno['id_professor']; ?>');">Modificar</button></td>
-         <td class="boton"><button class="btn btn-primary" onClick="aviso('emailalumnos.php?id=<?php echo $alumno['id_professor']; ?>');">Email</button></td>
+         <td class="boton"><button class="btn btn-primary" onClick="aviso('enviaremail.php?id=<?php echo $alumno['id_professor']; ?>');">Email</button></td>
         </tr>
      <?php
     }
@@ -246,6 +259,7 @@ if (isset($_GET['nombre1'])) {
 
 </script>
 <?php
+
     }else {
       $sql = "SELECT * FROM tbl_professor;";
       $listadodept = mysqli_query($connection, $sql);
@@ -270,13 +284,21 @@ if (isset($_GET['nombre1'])) {
                
     $sql20 = "SELECT  id_professor, nom_prof,email_prof,dni_prof,telf,curso_prof
     FROM tbl_professor
-    WHERE  nom_prof  Like "."'".$search. "'" ;
+    WHERE  nom_prof  Like "."'".'%'.$search.'%'. "'" ;
 $listadodept1 = mysqli_query($connection, $sql20);
+$listadodept1 = mysqli_query($connection, $sql20);
+if (mysqli_num_rows( $listadodept1)==0) {
+  ?>
+<script>
+alert ("No hay registros que coincidan con tus filtros")
+            aviso('crudprofes.php');
+            </script>
+            <?php       
   }
-              
-     
+}          
+    
 if (isset($_GET['nombre2'])) {
-    # code...
+   
 
 
     echo '</table>';
@@ -359,6 +381,7 @@ if (isset($_GET['nombre2'])) {
   </script>
   <?php
     }
+
     ?>
 
 

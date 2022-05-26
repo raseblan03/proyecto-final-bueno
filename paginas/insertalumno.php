@@ -73,15 +73,25 @@ include 'conexion.php';
     $cons = mysqli_query($connection,$comprobar);
  
     $row = mysqli_num_rows($cons);
+    $comprobar1= "SELECT dni_alu FROM tbl_alumne where dni_alu="."'".$dni."'";
+       
+    $cons1 = mysqli_query($connection,$comprobar1);
+ 
+    $row1 = mysqli_num_rows($cons1);
 
-if ($row>0) {
-    echo "<script type=\"text/javascript\">alert(\"Usuario '$nombre' repetido\");</script>"; 
-    } else{
+if ($row>0 || $row1>0) {
+    echo "<script type=\"text/javascript\">alert(\"Usuario '$correo' o '$dni' repetido\");</script>"; 
+    } else if ($row=0 && $row1=0 ) {
         $sql = "INSERT INTO tbl_alumne (nom_alu, email_alu,dni_alu, telf_alu, contra_alu,curso_alu) VALUES ('$nombre', '$correo', '$dni', '$telefono', '$contra','$clase');";
         $insert = mysqli_query($connection, $sql);
         echo "<script type=\"text/javascript\">alert(\"Usuario '$nombre' agregado correctamente\");</script>"; 
-       
     }
+       
+       
+    
+
+
+
 
 
 
